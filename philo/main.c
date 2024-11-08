@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	check_all(int ac , char **av)
+int	validate_input(int ac , char **av)
 {
 	int	n;
 	
@@ -22,9 +22,9 @@ int main (int ac, char **av)
 		ft_perror("Invalid number of args");
 		return(1);
 	}
-	if (check_all(ac , av) == -13)
+	if (validate_input(ac , av) == -13)
 		return (1);
 	th = pars_it(ac, av);
-	ft_start(th);
+	setup_simulation(th);
 	return (0);
 }

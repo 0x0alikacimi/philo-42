@@ -38,8 +38,8 @@ typedef struct s_philo_data
 void	ft_perror(char *str);
 int		valid_n(const char *str);
 int		ft_strlen(char *str);
-int		check_all(int ac , char **av);
+int		validate_input(int ac , char **av);
 t_DiningAttr	*pars_it(int ac, char **av);
-void	ft_start(t_DiningAttr *th);
+void	setup_simulation(t_DiningAttr *th);
 
 #endif
