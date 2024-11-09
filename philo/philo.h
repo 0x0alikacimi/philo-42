@@ -22,6 +22,7 @@ typedef struct s_DiningAttr
 /* Represents individual philosopher's information and forks used during dining */
 typedef struct s_philo_data
 {
+	size_t			id;
 	pthread_mutex_t	*left_fork;			// Pointer to the left fork (mutex), shared with the philosopher on the left
 	pthread_mutex_t	*right_fork;		// Pointer to the right fork (mutex), shared with the philosopher on the right
 	t_DiningAttr	*DiningAttributes;	// Pointer to shared dining attributes, enabling access to the simulation’s settings
