@@ -33,11 +33,11 @@ void	*the_routine(void *arg)
 	ph = (t_philo_data *)arg;
 	while(1)
 	{
-		printf("is eating\n");
+		write(1, "is eating\n", 11);
 		usleep(ph->DiningAttributes->t_eat * 1000);
-		printf("is sleeping\n");
+		write(1, "is sleeping\n", 13);
 		usleep(ph->DiningAttributes->t_slp * 1000);
-		printf("is thinking \n");
+		write(1, "is thinking\n", 13);
 		usleep(ph->DiningAttributes->t_eat * 1000);
 	}
 	return (NULL);
@@ -58,10 +58,15 @@ void	luncher(t_gen_data *gen)
 	while(i < gen->attr->n_phs)
 	{
 		/*Start a thread for each philosopher, passing a pointer to their t_philo_data */
-		// if (pthread_create())
-		printf("number %zu\n", i);
+		if (pthread_create(&thrds[i], NULL, the_routine, (void *)&gen->philos[i]) != 0)
+		{
+			ft_allocate(36, 0);
+			return ;
+		}
+		// printf("number %zu\n", i);
 		i++;
 	}
+	/*join them*/
 }
 
 void	setup_simulation(t_DiningAttr *th)
