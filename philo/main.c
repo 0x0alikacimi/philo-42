@@ -1,30 +1,15 @@
 #include "philo.h"
 
-int	validate_input(int ac , char **av)
-{
-	int	n;
-	
-	n = 1;
-	while (n < ac)
-	{
-		if (valid_n(av[n]) == -13)
-			return (-13);
-		n++;
-	}
-	return (0);
-}
-
 int main (int ac, char **av)
 {
-	t_DiningAttr	*th;
+	t_DiningAttr	th;
 	if (ac < 5 || ac > 6)
 	{
 		ft_perror("Invalid number of args");
 		return(1);
 	}
-	if (validate_input(ac , av) == -13)
-		return (1);
-	th = pars_it(ac, av);
-	setup_simulation(th);
+	if (pars_it(ac, av, &th) == 1)
+		return (ft_allocate(36, 0), 1);
+	setup_simulation(&th);
 	return (0);
 }

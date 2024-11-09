@@ -9,19 +9,20 @@ void	ft_init(t_DiningAttr *th)
 	th->num_meals = -1;
 }
 
-t_DiningAttr	*pars_it(int ac, char **av)
+int	pars_it(int ac, char **av, t_DiningAttr *th)
 {
-	t_DiningAttr	*th;
-	th = malloc(sizeof(t_DiningAttr));
-	ft_init(th);
+	int				i;
 
-	th->n_phs = valid_n(av[1]);
-	th->t_die = valid_n(av[2]);
-	th->t_eat = valid_n(av[3]);
-	th->t_slp = valid_n(av[4]);
-	if (ac == 6)
+	ft_init(th);
+	i = 1;
+	if ((valid_n(av[1], &th->n_phs) == 1)
+		|| (valid_n(av[2], &th->t_die) == 1)
+		|| (valid_n(av[3], &th->t_eat) == 1)
+		|| (valid_n(av[4], &th->t_slp) == 1))
 	{
-		th->num_meals = valid_n(av[5]);
+		return (1);
 	}
-	return (th);
+	if (ac == 6 && (valid_n(av[5], &th->num_meals) == 1))
+		return (1);
+	return (0);
 }

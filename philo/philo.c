@@ -10,17 +10,56 @@ int	somthing_wrong(t_DiningAttr *th)
 	return (0);
 }
 
-void	luncher(t_gen_data *gen)
+void	prepare_dining(t_gen_data *gen)
 {
-	int				i;
+	size_t				i;
 	t_philo_data	*philos;
 
-	philos = (t_philo_data *)malloc(gen->attr.n_phs * sizeof(t_philo_data));
+	philos = (t_philo_data *)ft_allocate(0, gen->attr->n_phs * sizeof(t_philo_data));
 	i = 0;
-	while (i < gen->attr.n_phs)
+	while (i < gen->attr->n_phs)
 	{
-		philos[i].right_fork = &gen->forks[i];
-		philos[i].left_fork = &gen->forks[(i + 1) % gen->attr.n_phs];
+		philos[i].right_fork = &(gen->forks[i]);
+		philos[i].left_fork = &(gen->forks[(i + 1) % gen->attr->n_phs]);
+		philos[i].DiningAttributes = gen->attr;
+		i++;
+	}
+	gen->philos = philos;
+}
+void	*the_routine(void *arg)
+{
+	t_philo_data *ph;
+
+	ph = (t_philo_data *)arg;
+	while(1)
+	{
+		printf("is eating\n");
+		usleep(ph->DiningAttributes->t_eat * 1000);
+		printf("is sleeping\n");
+		usleep(ph->DiningAttributes->t_slp * 1000);
+		printf("is thinking \n");
+		usleep(ph->DiningAttributes->t_eat * 1000);
+	}
+	return (NULL);
+}
+
+void	luncher(t_gen_data *gen)
+{
+	pthread_t	*thrds;
+	size_t		i;
+
+	thrds = (pthread_t *)ft_allocate(0, gen->attr->n_phs);
+	if (!thrds)
+	{
+		ft_allocate(36, 0);
+		return;
+	}
+	i = 0;
+	while(i < gen->attr->n_phs)
+	{
+		/*Start a thread for each philosopher, passing a pointer to their t_philo_data */
+		// if (pthread_create())
+		printf("number %zu\n", i);
 		i++;
 	}
 }
@@ -30,9 +69,24 @@ void	setup_simulation(t_DiningAttr *th)
 	t_gen_data	*gen;
 
 	gen = NULL;
-	gen = malloc(sizeof(t_gen_data));
-	gen->attr = *th;
-	gen->filo_id = (int *)malloc(gen->attr.n_phs * sizeof(int));
-	gen->forks = (pthread_mutex_t *)malloc(gen->attr.n_phs * sizeof(pthread_mutex_t));
+	gen = ft_allocate(0, sizeof(t_gen_data)); // protect
+	gen->attr = th;
+	gen->filo_id = (int *)ft_allocate(0, gen->attr->n_phs * sizeof(int));
+	gen->forks = (pthread_mutex_t *)ft_allocate(0, gen->attr->n_phs * sizeof(pthread_mutex_t));
+
+	// just printing addresses to check if it works or not later  
+	// for (size_t i = 0; i < gen->attr->n_phs; i++)
+	// {
+	// 	printf ("fork : %zu : %p\n", i, &gen->forks[i]);
+	// }
+
+	prepare_dining(gen);
+	// size_t i = 0;
+	// checks the addresses if the function prepare_dining did it job correctly 
+	// while(i < th->n_phs)
+	// {
+	// 	printf("philo %zu {right fork : %p | left fork : %p}\n", i, gen->philos[i].right_fork, gen->philos[i].left_fork);
+	// 	i++;
+	// }
 	luncher(gen);
 }

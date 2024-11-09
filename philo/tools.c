@@ -1,17 +1,5 @@
 #include "philo.h"
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (0); 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 void	ft_perror(char *str)
 {
 	int i;
@@ -24,11 +12,11 @@ void	ft_perror(char *str)
 	}
 }
 
-int	valid_n(const char *str)
+int	valid_n(char *str, unsigned long *nb)
 {
-	int res;
-	int i;
-	int check;
+	unsigned long	res;
+	unsigned long	check;
+	int			i;
 	
 	res = 0;
 	i = 0;
@@ -37,16 +25,16 @@ int	valid_n(const char *str)
 	if (str[i] == '+')
 		i++;
 	if (str[i] == '\0' || str[i] < '0' || str[i] > '9')
-		return(ft_perror("invalid arg\n"), -13);
+		return(ft_perror("invalid arg\n"), 1);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return(ft_perror("invalid arg\n"), -13);
+			return(ft_perror("invalid arg\n"), 1);
 		check = res;
 		res = res * 10 + (str[i] - '0');
 		if (res / 10 != check)
-			return(ft_perror("invalid arg\n"), -13);
+			return(ft_perror("invalid arg\n"), 1);
 		i++;
 	}
-	return (res);
+	return (*nb = res, 0);
 }
