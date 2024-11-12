@@ -11,7 +11,7 @@ void	ft_init(t_DiningAttr *th)
 
 int	pars_it(int ac, char **av, t_DiningAttr *th)
 {
-	int				i;
+	int	i;
 
 	ft_init(th);
 	i = 1;

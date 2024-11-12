@@ -1,14 +1,9 @@
 #include "philo.h"
 
-int	somthing_wrong(t_DiningAttr *th)
-{
-	if (th->num_meals == 0)
-	{
-		puts("no meals huh!?");
-		return (1);
-	}
-	return (0);
-}
+void	prepare_dining(t_gen_data *gen);
+void	luncher(t_gen_data *gen);
+void	setup_simulation(t_DiningAttr *th);
+
 
 void	prepare_dining(t_gen_data *gen)
 {
@@ -28,48 +23,6 @@ void	prepare_dining(t_gen_data *gen)
 	gen->philos = philos;
 }
 
-void	take_the_forks(t_philo_data *ph)
-{
-	/* pthread_mutex_lock && pthread_mutex_unlock */
-	pthread_mutex_lock(ph->right_fork);
-	printf("%zu has taken a fork\n", ph->id);
-	pthread_mutex_lock(ph->left_fork);
-	printf("%zu has taken a fork\n", ph->id);
-	printf("%zu is eating\n", ph->id);
-	usleep(ph->DiningAttributes->t_eat * 1000);
-	pthread_mutex_unlock(ph->right_fork);
-	pthread_mutex_unlock(ph->left_fork);
-}
-
-void	make_him_sleep(t_philo_data *ph)
-{
-	printf("%zu is sleeping\n", ph->id);
-	usleep(ph->DiningAttributes->t_slp * 1000);
-}
-
-void	make_him_think(t_philo_data *ph)
-{
-	printf("%zu is thinking \n", ph->id);
-}
-
-void	*the_routine(void *arg)
-{
-	t_philo_data *ph;
-
-	ph = (t_philo_data *)arg;
-
-	if (ph->id % 2)
-		usleep(50);
-
-	while(1)
-	{
-		take_the_forks(ph);
-		make_him_sleep(ph);
-		make_him_think(ph);
-	}
-	return (NULL);
-}
-
 void	luncher(t_gen_data *gen)
 {
 	pthread_t	*thrds;
@@ -82,10 +35,10 @@ void	luncher(t_gen_data *gen)
 		return;
 	}
 	i = 0;
-	while(i < gen->attr->n_phs)
+	while (i < gen->attr->n_phs)
 	{
 		/*Start a thread for each philosopher, passing a pointer to their t_philo_data */
-		if (pthread_create(&thrds[i], NULL, the_routine, (void *) &(gen->philos[i])) == -1)
+		if (pthread_create(&thrds[i], NULL, the_routine, (void *) &(gen->philos[i])) != 0)
 		{
 			ft_perror("pthread_create failed \n");
 			ft_allocate(36, 0);
@@ -93,7 +46,6 @@ void	luncher(t_gen_data *gen)
 		}
 		i++;
 	}
-	/*join them*/
 	for (size_t i = 0; i < gen->attr->n_phs; i++)
 	{
 		pthread_join(thrds[i], NULL);
