@@ -1,6 +1,6 @@
-NAME = philo
+NAME = philo 
 
-SRC_FILES = main.c philo.c tools1.c pars_it.c g_collect.c the_routine.c tools2.c
+SRC_FILES =  main.c tools1.c tools2.c g_collector.c simulation.c 
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -23,4 +23,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: clean
+.PHONY: clean 
