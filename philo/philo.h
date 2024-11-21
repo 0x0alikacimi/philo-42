@@ -62,6 +62,7 @@ int				setup_philos(t_gen_data *gen);
 void			philo_status(char *msg, t_philo_data *ph, size_t id);
 void			special_sleep(unsigned long t);
 unsigned long	the_time_is();
+void			is_eating(t_philo_data *ph);
 
 /********************************/
 
