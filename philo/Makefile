@@ -1,6 +1,6 @@
 NAME = philo 
 
-SRC_FILES =  main.c tools1.c tools2.c g_collector.c simulation.c 
+SRC_FILES =  main.c tools1.c tools2.c gc_tools.c simulation.c tools3.c monitor.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

@@ -17,7 +17,7 @@ int	valid_n(char *str, unsigned long *nb)
 	unsigned long	res;
 	unsigned long	check;
 	int				i;
-	
+
 	res = 0;
 	i = 0;
 	while ((str[i]) == ' ' || str[i] == '\t')
@@ -25,7 +25,7 @@ int	valid_n(char *str, unsigned long *nb)
 	if (str[i] == '+')
 		i++;
 	if (str[i] == '\0' || str[i] < '0' || str[i] > '9')
-		return(ft_perror("invalid arg\n"), 1);
+		return (ft_perror("invalid arg\n"), 1);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')

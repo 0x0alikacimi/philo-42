@@ -1,6 +1,6 @@
 #include "philo.h"
 
-unsigned long	the_time_is()
+unsigned long	the_time_is(void)
 {
 	struct timeval	t;
 
@@ -8,28 +8,29 @@ unsigned long	the_time_is()
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	philo_status(char *msg, t_philo_data *ph, size_t id)
-{
-	pthread_mutex_lock(&ph->DiningAttr->print);
-	pthread_mutex_lock(&ph->DiningAttr->check_death_mutex);
-	if (!ph->DiningAttr->death_sign)
-		printf ("%lu %zu %s", (the_time_is() - ph->DiningAttr->start_time), id, msg);
-	pthread_mutex_unlock(&ph->DiningAttr->check_death_mutex);
-	pthread_mutex_unlock(&ph->DiningAttr->print);
-}
-
 void	special_sleep(unsigned long t)
 {
 	unsigned long	st;
 
 	st = the_time_is();
-	while(t > (the_time_is() - st))
+	while (t > (the_time_is() - st))
 	{
 		usleep(500);
 	}
 }
 
-int	setup_simulation(t_DiningAttr *attr, t_gen_data *gen)
+void	philo_status(char *msg, t_philo_data *ph, size_t id)
+{
+	pthread_mutex_lock(&ph->diningattr->print);
+	pthread_mutex_lock(&ph->diningattr->check_death_mutex);
+	if (!ph->diningattr->death_sign)
+		printf ("%lu %zu %s", (the_time_is() - ph->diningattr->start_time),
+			id, msg);
+	pthread_mutex_unlock(&ph->diningattr->check_death_mutex);
+	pthread_mutex_unlock(&ph->diningattr->print);
+}
+
+int	setup_simulation(t_diningattr *attr, t_gen_data *gen)
 {
 	size_t	i;
 
@@ -66,7 +67,7 @@ int	setup_philos(t_gen_data *gen)
 		philos[i].left_fork = &(gen->forks[(i + 1) % gen->attr->n_phs]);
 		philos[i].id = i;
 		philos[i].last_eat = the_time_is();
-		philos[i].DiningAttr = gen->attr;
+		philos[i].diningattr = gen->attr;
 		gen->attr->death_sign = 0;
 		i++;
 	}

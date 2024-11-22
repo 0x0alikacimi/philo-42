@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	ft_init(t_DiningAttr *th)
+void	ft_init(t_diningattr *th)
 {
 	th->n_phs = -1;
 	th->t_die = -1;
@@ -9,7 +9,7 @@ void	ft_init(t_DiningAttr *th)
 	th->num_meals = -1;
 }
 
-int	pars_it(int ac, char **av, t_DiningAttr *th)
+int	pars_it(int ac, char **av, t_diningattr *th)
 {
 	int	i;
 
@@ -24,12 +24,16 @@ int	pars_it(int ac, char **av, t_DiningAttr *th)
 	}
 	if (ac == 6 && (valid_n(av[5], &th->num_meals) == 1))
 		return (1);
+	if (!(th->n_phs >= 1 && th->n_phs <= 200))
+		return (ft_perror("philos number should be  between 200 and 1\n"), 1);
+	if (ac == 6 && th->num_meals == 0)
+		return (ft_perror("no meals huh!!??\n"), 1);
 	return (0);
 }
 
-int main (int ac , char **av)
+int	main(int ac, char **av)
 {
-	t_DiningAttr	attr;
+	t_diningattr	attr;
 	t_gen_data		gen;
 
 	if (ac < 5 || ac > 6)
