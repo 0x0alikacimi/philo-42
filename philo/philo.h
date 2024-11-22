@@ -63,6 +63,7 @@ void			*monitor(void *arg);
 int				the_dining(t_gen_data *gen);
 void			perform_actions(t_philo_data *ph);
 int				check_conditions(t_philo_data *ph);
+void			cleanup_simulation(t_gen_data *gen);
 
 /********************************/
 

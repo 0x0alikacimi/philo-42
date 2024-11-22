@@ -38,7 +38,7 @@ int	handle_single_philo(t_gen_data *gen)
 	return (0);
 }
 
-int	reate_philosopher_threads(t_gen_data *gen, pthread_t *threads)
+int	create_philosopher_threads(t_gen_data *gen, pthread_t *threads)
 {
 	size_t	i;
 
