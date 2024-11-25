@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:03:56 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:52:31 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,20 @@ unsigned long	the_time_is(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-void	special_sleep(unsigned long t)
+void	special_sleep(unsigned long t, t_diningattr *attr)
 {
 	unsigned long	st;
 
 	st = the_time_is();
-	while (t > (the_time_is() - st))
+	while (the_time_is() - st < t)
 	{
+		pthread_mutex_lock(&attr->check_end_mutex);
+		if (attr->end_sign)
+		{
+			pthread_mutex_unlock(&attr->check_end_mutex);
+			return ;
+		}
+		pthread_mutex_unlock(&attr->check_end_mutex);
 		usleep(500);
 	}
 }
@@ -79,6 +86,9 @@ int	setup_philos(t_gen_data *gen)
 		philos[i].left_fork = &(gen->forks[(i + 1) % gen->attr->n_phs]);
 		philos[i].id = i;
 		philos[i].last_eat = the_time_is();
+		pthread_mutex_lock(&philos[i].last_eat_mutex);
+		philos[i].meals_eaten = 0;
+		pthread_mutex_unlock(&philos[i].last_eat_mutex);
 		philos[i].diningattr = gen->attr;
 		gen->attr->end_sign = 0;
 		i++;

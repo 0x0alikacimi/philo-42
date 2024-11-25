@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:04:00 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:53:57 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	is_eating(t_philo_data *ph)
 	ph->meals_eaten++;
 	pthread_mutex_unlock(&ph->last_eat_mutex);
 	philo_status("is eating\n", ph, ph->id + 1);
-	special_sleep(ph->diningattr->t_eat);
+	special_sleep(ph->diningattr->t_eat, ph->diningattr);
 	pthread_mutex_unlock(ph->left_fork);
 	pthread_mutex_unlock(ph->right_fork);
 }
@@ -32,7 +32,7 @@ void	perform_actions(t_philo_data *ph)
 {
 	is_eating(ph);
 	philo_status("is sleeping\n", ph, ph->id + 1);
-	special_sleep(ph->diningattr->t_slp);
+	special_sleep(ph->diningattr->t_slp, ph->diningattr);
 	philo_status("is thinking\n", ph, ph->id + 1);
 }
 

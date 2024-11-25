@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:02:15 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 14:56:26 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:52:57 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				valid_n(char *str, unsigned long *nb);
 int				setup_simulation(t_diningattr *attr, t_gen_data *gen);
 int				setup_philos(t_gen_data *gen);
 void			philo_status(char *msg, t_philo_data *ph, size_t id);
-void			special_sleep(unsigned long t);
+void			special_sleep(unsigned long t, t_diningattr *attr);
 unsigned long	the_time_is(void);
 void			is_eating(t_philo_data *ph);
 void			*monitor(void *arg);

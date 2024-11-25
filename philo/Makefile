@@ -7,7 +7,7 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror 
 
-philo/%.o : philo.h
+%.o : %.c philo.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all : $(NAME)

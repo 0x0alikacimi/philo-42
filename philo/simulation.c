@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:03:48 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 12:03:48 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:53:29 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	*the_routine(void *arg)
 	if (ph->diningattr->n_phs == 1)
 	{
 		philo_status("has taken a fork\n", ph, ph->id + 1);
-		special_sleep(ph->diningattr->t_die);
+		special_sleep(ph->diningattr->t_die, ph->diningattr);
+		printf("%lu %zu died\n", (the_time_is() - ph->diningattr->start_time),
+			ph->id + 1);
 		return (NULL);
 	}
 	if (ph->id % 2)
-		special_sleep(100);
+		usleep(100);
 	while (1)
 	{
 		if (check_conditions(ph))

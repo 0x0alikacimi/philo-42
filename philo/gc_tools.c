@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:01:56 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 12:01:57 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:11:20 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	*ft_allocate(int flag, int size)
 	else
 	{
 		nd = gc_new(size);
+		if (!nd)
+			return (NULL);
 		set_zero(nd->ptr, size);
 		gc_add_back(&hd, nd);
 		return (nd->ptr);

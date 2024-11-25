@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:02:09 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:24:13 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_philo_death(t_gen_data *gen, size_t i)
 		gen->attr->end_sign = 1;
 		pthread_mutex_unlock(&gen->attr->check_end_mutex);
 		printf("%lu %zu died\n", (the_time_is() - gen->attr->start_time),
-			gen->philos[i].id);
+			gen->philos[i].id + 1);
 		pthread_mutex_unlock(&gen->philos[i].last_eat_mutex);
 		return (1);
 	}
