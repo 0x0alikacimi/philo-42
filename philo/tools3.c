@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools3.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 12:04:00 by abkacimi          #+#    #+#             */
+/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	is_eating(t_philo_data *ph)
@@ -26,13 +38,13 @@ void	perform_actions(t_philo_data *ph)
 
 int	check_conditions(t_philo_data *ph)
 {
-	pthread_mutex_lock(&ph->diningattr->check_death_mutex);
-	if (ph->diningattr->death_sign)
+	pthread_mutex_lock(&ph->diningattr->check_end_mutex);
+	if (ph->diningattr->end_sign)
 	{
-		pthread_mutex_unlock(&ph->diningattr->check_death_mutex);
+		pthread_mutex_unlock(&ph->diningattr->check_end_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&ph->diningattr->check_death_mutex);
+	pthread_mutex_unlock(&ph->diningattr->check_end_mutex);
 	pthread_mutex_lock(&ph->last_eat_mutex);
 	if (ph->diningattr->num_meals != (unsigned long)-1
 		&& ph->meals_eaten >= ph->diningattr->num_meals)
@@ -55,7 +67,7 @@ void	cleanup_simulation(t_gen_data *gen)
 		pthread_mutex_destroy(&gen->philos[i].last_eat_mutex);
 		i++;
 	}
-	pthread_mutex_destroy(&gen->attr->check_death_mutex);
+	pthread_mutex_destroy(&gen->attr->check_end_mutex);
 	pthread_mutex_destroy(&gen->attr->print);
 	pthread_mutex_destroy(&gen->attr->eat_mutex);
 	ft_allocate(36, 0);

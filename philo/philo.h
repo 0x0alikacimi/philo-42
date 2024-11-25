@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 12:02:15 by abkacimi          #+#    #+#             */
+/*   Updated: 2024/11/25 14:56:26 by abkacimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -15,8 +27,8 @@ typedef struct s_diningattr
 	unsigned long	t_eat;
 	unsigned long	t_slp;
 	unsigned long	num_meals;
-	int				death_sign;
-	pthread_mutex_t	check_death_mutex;
+	int				end_sign;
+	pthread_mutex_t	check_end_mutex;
 	pthread_mutex_t	print;
 	pthread_mutex_t	eat_mutex;
 	unsigned long	start_time;
@@ -46,12 +58,8 @@ typedef struct s_gc_e
 	struct s_gc_e	*next;
 }					t_gc_e;
 
-/********************************/
-
 void			ft_perror(char *str);
 int				valid_n(char *str, unsigned long *nb);
-
-/********************************/
 
 int				setup_simulation(t_diningattr *attr, t_gen_data *gen);
 int				setup_philos(t_gen_data *gen);
@@ -65,10 +73,6 @@ void			perform_actions(t_philo_data *ph);
 int				check_conditions(t_philo_data *ph);
 void			cleanup_simulation(t_gen_data *gen);
 
-/********************************/
-
 void			*ft_allocate(int flag, int size);
-
-/********************************/
 
 #endif

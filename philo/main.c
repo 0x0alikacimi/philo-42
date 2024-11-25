@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 12:02:03 by abkacimi          #+#    #+#             */
+/*   Updated: 2024/11/25 12:20:33 by abkacimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_init(t_diningattr *th)
@@ -48,4 +60,5 @@ int	main(int ac, char **av)
 	if (setup_philos(&gen) != 0)
 		return (1);
 	the_dining(&gen);
+	cleanup_simulation(&gen);
 }

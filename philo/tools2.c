@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 12:03:56 by abkacimi          #+#    #+#             */
+/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 unsigned long	the_time_is(void)
@@ -22,11 +34,11 @@ void	special_sleep(unsigned long t)
 void	philo_status(char *msg, t_philo_data *ph, size_t id)
 {
 	pthread_mutex_lock(&ph->diningattr->print);
-	pthread_mutex_lock(&ph->diningattr->check_death_mutex);
-	if (!ph->diningattr->death_sign)
+	pthread_mutex_lock(&ph->diningattr->check_end_mutex);
+	if (!ph->diningattr->end_sign)
 		printf ("%lu %zu %s", (the_time_is() - ph->diningattr->start_time),
 			id, msg);
-	pthread_mutex_unlock(&ph->diningattr->check_death_mutex);
+	pthread_mutex_unlock(&ph->diningattr->check_end_mutex);
 	pthread_mutex_unlock(&ph->diningattr->print);
 }
 
@@ -45,7 +57,7 @@ int	setup_simulation(t_diningattr *attr, t_gen_data *gen)
 		pthread_mutex_init(&gen->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&gen->attr->check_death_mutex, NULL);
+	pthread_mutex_init(&gen->attr->check_end_mutex, NULL);
 	pthread_mutex_init(&gen->attr->print, NULL);
 	pthread_mutex_init(&gen->attr->eat_mutex, NULL);
 	return (0);
@@ -68,7 +80,7 @@ int	setup_philos(t_gen_data *gen)
 		philos[i].id = i;
 		philos[i].last_eat = the_time_is();
 		philos[i].diningattr = gen->attr;
-		gen->attr->death_sign = 0;
+		gen->attr->end_sign = 0;
 		i++;
 	}
 	gen->philos = philos;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 12:02:09 by abkacimi          #+#    #+#             */
+/*   Updated: 2024/11/25 14:54:46 by abkacimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_all_ate_enough(t_gen_data *gen)
@@ -28,9 +40,9 @@ int	check_philo_death(t_gen_data *gen, size_t i)
 	pthread_mutex_lock(&gen->philos[i].last_eat_mutex);
 	if (curr_time - gen->philos[i].last_eat >= gen->attr->t_die)
 	{
-		pthread_mutex_lock(&gen->attr->check_death_mutex);
-		gen->attr->death_sign = 1;
-		pthread_mutex_unlock(&gen->attr->check_death_mutex);
+		pthread_mutex_lock(&gen->attr->check_end_mutex);
+		gen->attr->end_sign = 1;
+		pthread_mutex_unlock(&gen->attr->check_end_mutex);
 		printf("%lu %zu died\n", (the_time_is() - gen->attr->start_time),
 			gen->philos[i].id);
 		pthread_mutex_unlock(&gen->philos[i].last_eat_mutex);
@@ -58,9 +70,9 @@ void	*monitor(void *arg)
 		if (gen->attr->num_meals != (unsigned long)-1
 			&& check_all_ate_enough(gen))
 		{
-			pthread_mutex_lock(&gen->attr->check_death_mutex);
-			gen->attr->death_sign = 1;
-			pthread_mutex_unlock(&gen->attr->check_death_mutex);
+			pthread_mutex_lock(&gen->attr->check_end_mutex);
+			gen->attr->end_sign = 1;
+			pthread_mutex_unlock(&gen->attr->check_end_mutex);
 			return (NULL);
 		}
 		usleep(100);
