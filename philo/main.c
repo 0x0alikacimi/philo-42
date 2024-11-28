@@ -6,7 +6,7 @@
 /*   By: abkacimi <abkacimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:02:03 by abkacimi          #+#    #+#             */
-/*   Updated: 2024/11/25 12:20:33 by abkacimi         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:13:35 by abkacimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	main(int ac, char **av)
 	t_gen_data		gen;
 
 	if (ac < 5 || ac > 6)
-	{
-		ft_perror("Invalid number of args");
-		return (1);
-	}
+		return (ft_perror("Invalid number of args"), 1);
 	if (pars_it(ac, av, &attr) == 1)
 		return (ft_allocate(36, 0), 1);
 	if (setup_simulation(&attr, &gen) != 0)
